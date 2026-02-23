@@ -1,5 +1,3 @@
-package leetverse;
-
 class Room {
     Room() {
         System.out.println("Room created");

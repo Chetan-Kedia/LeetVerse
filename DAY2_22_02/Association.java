@@ -1,5 +1,3 @@
-package leetverse;
-
 class Pen {
     void write() {
         System.out.println("Writing...");
