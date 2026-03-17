@@ -1,0 +1,52 @@
+import java.util.Stack;
+
+public class PrefixEvaluation {
+
+    // Method to check if a character is operator
+    private static boolean isOperator(char c) {
+        return c == '+' || c == '-' || c == '*' || c == '/';
+    }
+
+    // Method to perform calculation
+    private static int applyOperator(char operator, int op1, int op2) {
+        switch (operator) {
+            case '+': return op1 + op2;
+            case '-': return op1 - op2;
+            case '*': return op1 * op2;
+            case '/': return op1 / op2; // integer division
+            default: throw new IllegalArgumentException("Invalid operator " + operator);
+        }
+    }
+
+    // Evaluate prefix expression
+    public static int evaluatePrefix(String expr) {
+        Stack<Integer> stack = new Stack<>();
+
+        // Process the expression from right to left
+        for (int i = expr.length() - 1; i >= 0; i--) {
+            char c = expr.charAt(i);
+
+            if (Character.isDigit(c)) {
+                // Convert char to int and push
+                stack.push(c - '0');
+            } else if (isOperator(c)) {
+                // Pop two operands
+                int op1 = stack.pop();
+                int op2 = stack.pop();
+
+                // Apply operator and push result
+                int result = applyOperator(c, op1, op2);
+                stack.push(result);
+            }
+        }
+
+        // Final result
+        return stack.pop();
+    }
+
+    public static void main(String[] args) {
+        String prefixExpr = "-+7*45+20"; // example: equivalent to (7 + (4 * 5)) - (2 + 0)
+        int result = evaluatePrefix(prefixExpr);
+        System.out.println("Result: " + result);
+    }
+}
